@@ -1,0 +1,88 @@
+﻿<!--Shreshtha-->
+@model SmokersTavern.Model.BranchViewModel
+
+@{
+    ViewBag.Title = "Update Branch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script src="/Scripts/jquery-1.10.2.js"></script>
+
+<script src="/Scripts/jquery.validate.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.bootstrap.js"></script>
+
+
+
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Are you sure you want to update this branch?</h2></center>
+<br />
+
+@using (Html.BeginForm("Update", "Branch", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+@Html.AntiForgeryToken()
+
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.BranchId)
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BranchName, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BranchName)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BranchManager, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BranchManager, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BranchManager)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BranchAddress, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BranchAddress, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BranchAddress)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BranchContactNumber, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BranchContactNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BranchContactNumber)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BranchEmail, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BranchEmail, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BranchEmail)
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn-primary" />
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("View All Branches","Index", "Branch", new { @class = "btn btn-primary", @style = "color:white" })
+    </div>
+</div>
+}
+
+
+

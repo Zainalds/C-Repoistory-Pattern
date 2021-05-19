@@ -1,0 +1,104 @@
+﻿<!--Romell-->
+@model PagedList.IPagedList<SmokersTavern.Model.TopSellingProductViewModel>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+
+
+&nbsp;
+<br />
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Daily Sales</h2></center>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
+<script>
+    $(function () {
+        $("#datepicker1").datepicker({dateFormat: 'yy-mm-dd' });
+    });
+</script>
+
+&nbsp;
+&nbsp;
+<br />
+
+@using (Html.BeginForm("DailySales", "Report", FormMethod.Post))
+{
+    <div style="float:right">
+        <div class="col-lg-2">
+            <p>From Date: <input type="text" id="datepicker" name="val" /></p>
+            @*<p>End Date: <input type="text" id="datepicker1" name="val2"></p>*@
+        </div>
+        <br />
+        <input type="submit" value="Search" id="SA" />
+    </div>
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<center>
+    <div>
+        <p>Total Sales:&nbsp; @ViewBag.a &nbsp;&nbsp;&nbsp; Total Purchases:&nbsp;@ViewBag.c</p>
+    </div>
+</center>
+<br />
+<table class="table table-striped" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.ActionLink("Product Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort A-Z or Z-A" })
+        </th>
+        <th>
+            @Html.ActionLink("Total Purchases", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Total Product Sales", "Index")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductPurchaseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductPurchaseQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductPurchaseTotal)
+        </td>
+    </tr>
+    }
+</table>
+
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("TopSellingProduct",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

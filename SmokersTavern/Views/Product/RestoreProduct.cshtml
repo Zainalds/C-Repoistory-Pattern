@@ -1,0 +1,91 @@
+﻿<!--Shivani Reddy-->
+@model SmokersTavern.Model.ProductArchiveViewModel
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<br />
+<br />
+<br />
+
+
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Are you sure you want to Restore this product?</h2></center>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4 item-photo">
+            <img style="max-width:100%;" src="~/Content/Images/@Model.ImageUrl" />
+        </div>
+        <div class="col-xs-5" style="border:0px solid gray">
+            <!-- Datos del vendedor y titulo del producto -->
+            <h6 class="title-price"><small>PRODUCT NAME</small></h6>
+            <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductName)</h3>
+
+            <!-- Precios -->
+            <h6 class="title-price"><small>PRODUCT PRICE</small></h6>
+            <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductPrice)</h3>
+
+            <h6 class="title-price"><small>COST PRICE</small></h6>
+            <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductCostPrice)</h3>
+
+            <!-- Detalles especificos del producto -->
+            <h6 class="title-price"><small>PRODUCT COLOR</small></h6>
+            <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductColor)</h3>
+
+
+            <h6 class="title-price"><small>PRODUCT QUANTITY</small></h6>
+            <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductQuantity)</h3>
+
+
+            <!-- Botones de compra -->
+            @using (Html.BeginForm())
+            {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Restore" class="btn btn-primary" />
+                @Html.ActionLink("Back to Products", "Index", new { @class = "btn btn-danger", @style = "color:white" })
+            </div>
+            }
+        </div>
+        <br />
+        <br />
+
+
+        <div class="col-xs-9">
+            <h4 style="color:red;"><strong>Description</strong></h4>
+            <br />
+            <div style="width:100%;border-top:1px solid silver">
+                <small>
+                    <ul>
+                        <li>Atomizer material: stainless steel</li>
+                        <li>Mod material: Aluminum + zinc alloy construction</li>
+                        <li>Glass tank</li>
+                        <li>Variable wattage: 5W-80W</li>
+                        <li>Temperature control: 200'F-600'F / 100'C-300'C</li>
+                        <li>Resistance range: 0.1-3ohm(VW) / 0.05-0.35ohm(Ni) / 0.1-0.8ohm(Ti)</li>
+                        <li>OLED screen</li>
+                        <li>Magnet back cover</li>
+                        <li>Overload protection</li>
+                        <li>Over time protection</li>
+                        <li>Low voltage protection</li>
+                        <li>Short-circuit protection</li>
+                        <li>Overcharge protection</li>
+                        <li>Houses a single high amperage 18650 battery (batteries sold separately)</li>
+                        <li>Micro-USB port</li>
+                    </ul>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>        

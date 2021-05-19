@@ -1,0 +1,97 @@
+﻿<!--Shivani Reddy-->
+@model IEnumerable<SmokersTavern.Model.PuchaseOrderItemsViewModel>
+
+@{
+    Layout = null;
+}
+
+
+
+<body style="border:dotted;padding-right:20px;" onload="calc()">
+    <center>
+        <h1 style="font-family:'Monotype Corsiva';font-weight:bold;color:green">Smokers Tavern Purchase Order</h1>
+    </center>
+    <br />
+    <div class="row" style="padding-left:20px">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p style="font-family:Calibri;font-weight:bold;color:black">Smokers Tavern</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">19 Parthenon St</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">Starwood</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">Phoenix</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">4068</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">Tel:&nbsp;(031) 811 7039</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">Email:&nbsp;admin@smokerstavern.co.za</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:black">Website:&nbsp;https://smokerstavern.azurewebsites.net</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <center>
+        <div>
+            @foreach (var item in Model.Take(1))
+            {
+                <div>
+                    <p style="font-family:Calibri;font-weight:bold;color:red">Ref:&nbsp;@Html.DisplayFor(model => item.OrderReferenceNumber)</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:red">Attention:&nbsp;@Html.DisplayFor(model => item.OrderContactPerson)</p>
+                    <p style="font-family:Calibri;font-weight:bold;color:red">Delivery Address:&nbsp;@Html.DisplayFor(model => item.OrderDeliveryAddress)</p>
+                </div>
+            }
+        </div>
+    </center>
+    <br />
+    <br />
+    <center>
+        <div>
+            <table border="1" width="50" id="table">
+                <tr>
+                    <th></th>
+                    <th style="padding-left:20px;padding-right:100px;font-weight:bold;font-family:Calibri">Quantity</th>
+                    <th style="padding-left:20px;padding-right:150px;font-weight:bold;font-family:Calibri">Description</th>
+                    <th style="padding-left:20px;padding-right:100px;font-weight:bold;font-family:Calibri">Unit Price</th>
+                    <th style="padding-left:20px;padding-right:100px;font-weight:bold;font-family:Calibri">Total</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="font-weight:bold;font-family:Calibri">@Html.DisplayName("*")</td>
+                        <td style="padding-left:20px;padding-right:100px;font-weight:bold;font-family:Calibri">@Html.DisplayFor(model => item.Quantity)</td>
+                        <td style="padding-left:20px;padding-right:150px;font-weight:bold;font-family:Calibri">@Html.DisplayFor(model => item.ProductName)</td>
+                        <td style="padding-left:20px;padding-right:150px;font-weight:bold;font-family:Calibri">@Html.DisplayFor(model => item.ProductPrice)</td>
+                        <td class="input-group" style="padding-left:20px;padding-right:100px;font-weight:bold;font-family:Calibri">@Html.DisplayFor(model => item.LinePrice)</td>
+                    </tr>
+                }
+            </table>
+            <table border="1" width="50">
+                <tr>
+                    <th>Subtotal ( R )</th>
+                    <th>Vat</th>
+                    <th>Grand total ( R )</th>
+                </tr>
+                <tr>
+                    <td><input type="text" id="total" readonly="readonly"/></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </center>
+    <script type="text/javascript">
+
+        function calc() {
+
+            var items = document.getElementsByClassName("input-group");
+            var itemCount = items.length;
+            var total = 0;
+
+            for (var i = 0; i < itemCount; i++) {
+                total = total + parseInt(items[i].value);
+            }
+            document.getElementById('total').value = total;
+        }
+    </script>
+</body>
+
+

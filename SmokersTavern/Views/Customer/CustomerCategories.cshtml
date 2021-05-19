@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SmokersTavern.Model.CategoryViewModel>
+
+
+@{
+    /**/
+
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Browse Product Categories</h2></center>
+<br />
+
+<center><img src="~/Content/Images/HomeFigures.png" alt="Wonderfull" /></center>
+<br />
+<br />
+
+<table class="table" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.ActionLink("Category name", "AllCategories")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.CategoryName, "GetCustomerProduct", "Product", new { Id = item.Id }, null)
+            </td>
+        </tr>
+    }
+</table>
+
+

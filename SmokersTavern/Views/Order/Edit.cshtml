@@ -1,0 +1,124 @@
+﻿<!--Vishalen-->
+@model SmokersTavern.Model.OrderViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<center><h2 class="alert-info" style="font-family:'Comic Sans MS';">Process Order</h2></center>
+<div class="row">
+    <div class="col-lg-12">
+        <br />
+        @using (Html.BeginForm("Edit", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.OrderId)
+
+            @*<div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.LabelFor(model => model.Username)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Username)
+                        </dd>
+                        <dt>
+                            @Html.LabelFor(model => model.Products)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Products)
+                        </dd>
+                        <dt>
+                            @Html.LabelFor(model => model.Date)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Date)
+                        </dd>
+                        <dt>
+                            @Html.LabelFor(model => model.Total)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Total)
+                        </dd>
+                        <dt>
+                            @Html.LabelFor(model => model.OrderPostalAddress)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.OrderPostalAddress)
+                        </dd>
+                    </dl>
+                </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10" style="height: 40%;width: 30%">
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger", @readonly = "true" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Products, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10" style="height: 40%;width: 30%">
+                    @Html.TextBoxFor(m => m.Products, new { @class = "form-control", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.Products, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Date, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10" style="height: 40%;width: 30%">
+                    @Html.TextBoxFor(m => m.Date, new { @class = "form-control", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Total, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10" style="height: 40%;width: 30%">
+                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.Total, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.OrderPostalAddress, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10" style="height: 40%;width: 30%">
+                    @Html.TextBoxFor(m => m.OrderPostalAddress, new { @class = "form-control", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.OrderPostalAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Status, new SelectList(new[] { "Pending", "Dispatched", "Delivered", "Returned" }))
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Process Order" style="width: 20%;height: 10%" class="btn btn-success" />
+                    @Html.ActionLink("Cancel", "Index", "Order", routeValues: null, htmlAttributes: new { @class = "btn btn-danger", @style = "color:white" })
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+

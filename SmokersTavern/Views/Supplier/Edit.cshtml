@@ -1,0 +1,84 @@
+﻿//Shreshtha
+@model SmokersTavern.Data.Models.Supplier
+@{
+    ViewBag.Title = "Edit Supplier Details";
+}
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Edit Supplier Details</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form action="" method="post" class="form-horizontal">
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Supplier Name</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact Number</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.TextBoxFor(model => model.SupplierContactNumeber, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(model => model.SupplierContactNumeber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Email</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.TextBoxFor(model => model.SupplierEmail, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(model => model.SupplierEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Address</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.TextBoxFor(model => model.SupplierAddress, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Contact Person</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.TextBoxFor(model => model.SupplierContactPerson, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(model => model.SupplierContactPerson, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Payment Terms</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.DropDownListFor(m => m.PaymentTerms, new SelectList(new[] { "Select Payment Terms", "30 days", "60 days" }), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SupplierContactPerson, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="card-footer">
+                    <input type="submit" value="Save " class="btn btn-primary btn-md" />
+                </div>
+            </div>
+        </div>
+    }
+</body>

@@ -1,0 +1,74 @@
+﻿//Shreshtha
+@model IEnumerable<SmokersTavern.Data.Models.PurchaseItem>
+@{
+
+                ViewBag.Title = "Purchase Order";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<div id="right-panel" class="right-panel">
+    <div class="content mt-3">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                Purchase Order Items
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <tr class="success">
+                                    <th>
+                                        Product Name
+                                    </th>
+                                    <th>
+                                        Product Cost Price
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductCostPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(" ", "EditPurchaseOrder", new { id = item.Id, ClientId = item.ClientId }, new { title = "Edit " + item.ProductName + "'s Record", @class = "btn btn-default fa fa-edit fa-lg" })
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink(" ", "DeletePurchaseItem", new { id = item.Id }, new { title = "Delete " + item.ProductName + "'s Record", @class = "btn btn-default fa fa-trash fa-lg" })
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

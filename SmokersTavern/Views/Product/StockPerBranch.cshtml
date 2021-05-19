@@ -1,0 +1,132 @@
+﻿<!--Shivani Manickum-->
+@model PagedList.IPagedList<SmokersTavern.Model.ProductViewModel>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+&nbsp;
+&nbsp;
+
+&nbsp;
+&nbsp;
+
+@*<div style="padding:10px; border:1px solid black">
+        <div><a href="@Url.Action("Report",new {id= "PDF"})"> Get Report PDF</a></div>
+        <div><a href="@Url.Action("Report",new {id= "Excel"})"> Get Report Excel</a></div>
+        <div><a href="@Url.Action("Report",new {id= "Word"})"> Get Report Word</a></div>
+        <div><a href="@Url.Action("Report",new {id= "Image"})"> Get Report Image</a></div>
+    </div>*@
+
+@using (Html.BeginForm("StockPerBranch", "Product", FormMethod.Get))
+{
+    <p>
+        Search By Product Name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { id = "searchBox", onkeyup = "myFunction()" })
+        <input type="submit" value="Search" />
+    </p>
+}
+<br />
+@foreach (var item in Model.Take(1))
+{
+    <center><h2 class="alert-success" style="font-family:'Comic Sans MS';color:black;">@Html.DisplayFor(modelItem => item.BranchName) Stock - </h2></center>
+}
+<br />
+<table class="table" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.ActionLink("Product Image", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Product Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort A-Z or Z-A" })
+        </th>
+        <th>
+            @Html.ActionLink("Product Quantity", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Product Price", "Index", new { sortOrder = ViewBag.PriceSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort Highest-Lowest" })
+        </th>
+        <th>
+            @Html.ActionLink("Cost Price", "Index")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            <img src="~/Content/Images/@item.ImageUrl" width="100" height="100" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCostPrice)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "GetSummary", "Product", new { Id = item.Id }, new { @class = "btn btn-dark", @style = "color:white" })
+            @Html.ActionLink("Stock Control", "Create", "StockTransaction", new { Id = item.Id }, new { @class = "btn btn-warning", @style = "color:white" })
+            @Html.ActionLink("Add Stock", "Increase", "StockTransaction", new { Id = item.Id }, new { @class = "btn btn-primary", @style = "color:white" })
+
+            @*<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <div>
+                            <a class="dropdown-item" href="@Url.Action("GetSummary", "Product", new {Id=item.Id })">Details</a>
+                            <a class="dropdown-item" href="@Url.Action("Create", "StockTransaction")">Stock Control</a>
+                            <a class="dropdown-item" href="@Url.Action("Increase", "StockTransaction")">Increase Stock</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </td>
+    </tr>
+    }
+</table>
+
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("StockPerBranch",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

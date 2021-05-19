@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokersTavern", "SmokersTavern\SmokersTavern.csproj", "{6C1AD32C-F293-441F-AD3D-C0D47F4917BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokersTavern.Tests", "SmokersTavern.Tests\SmokersTavern.Tests.csproj", "{BD44E903-97AF-42D3-BAA1-02DB68958A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokersTavern.Data", "SmokersTavern.Data\SmokersTavern.Data.csproj", "{A8AC4EBF-E935-4B55-8805-32A136C182B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokersTavern.Service", "SmokersTavern.Service\SmokersTavern.Service.csproj", "{0B5F8055-92B0-4F24-A00A-6E804E29B600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokersTavern.Model", "SmokersTavern.Model\SmokersTavern.Model.csproj", "{2F791698-51B4-4214-B148-D9223CF4C3D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmokersTavern.Business", "SmokersTavern.Business\SmokersTavern.Business.csproj", "{29831B1B-DC0C-41DA-BB31-5D85B949A252}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C1AD32C-F293-441F-AD3D-C0D47F4917BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1AD32C-F293-441F-AD3D-C0D47F4917BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1AD32C-F293-441F-AD3D-C0D47F4917BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1AD32C-F293-441F-AD3D-C0D47F4917BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1AD32C-F293-441F-AD3D-C0D47F4917BA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{BD44E903-97AF-42D3-BAA1-02DB68958A36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD44E903-97AF-42D3-BAA1-02DB68958A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD44E903-97AF-42D3-BAA1-02DB68958A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD44E903-97AF-42D3-BAA1-02DB68958A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8AC4EBF-E935-4B55-8805-32A136C182B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8AC4EBF-E935-4B55-8805-32A136C182B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8AC4EBF-E935-4B55-8805-32A136C182B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8AC4EBF-E935-4B55-8805-32A136C182B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5F8055-92B0-4F24-A00A-6E804E29B600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5F8055-92B0-4F24-A00A-6E804E29B600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5F8055-92B0-4F24-A00A-6E804E29B600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5F8055-92B0-4F24-A00A-6E804E29B600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F791698-51B4-4214-B148-D9223CF4C3D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F791698-51B4-4214-B148-D9223CF4C3D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F791698-51B4-4214-B148-D9223CF4C3D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F791698-51B4-4214-B148-D9223CF4C3D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29831B1B-DC0C-41DA-BB31-5D85B949A252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29831B1B-DC0C-41DA-BB31-5D85B949A252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29831B1B-DC0C-41DA-BB31-5D85B949A252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29831B1B-DC0C-41DA-BB31-5D85B949A252}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73F2B885-3C06-4D5A-B1BA-75D9C1833248}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://smokerstavern.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SmokersTavern.Business\\SmokersTavern.Business.csproj
+		SccProjectName1 = SmokersTavern.Business
+		SccLocalPath1 = SmokersTavern.Business
+		SccProjectUniqueName2 = SmokersTavern.Data\\SmokersTavern.Data.csproj
+		SccProjectName2 = SmokersTavern.Data
+		SccLocalPath2 = SmokersTavern.Data
+		SccProjectUniqueName3 = SmokersTavern.Model\\SmokersTavern.Model.csproj
+		SccProjectName3 = SmokersTavern.Model
+		SccLocalPath3 = SmokersTavern.Model
+		SccProjectUniqueName4 = SmokersTavern.Service\\SmokersTavern.Service.csproj
+		SccProjectName4 = SmokersTavern.Service
+		SccLocalPath4 = SmokersTavern.Service
+		SccProjectUniqueName5 = SmokersTavern.Tests\\SmokersTavern.Tests.csproj
+		SccProjectName5 = SmokersTavern.Tests
+		SccLocalPath5 = SmokersTavern.Tests
+		SccProjectUniqueName6 = SmokersTavern\\SmokersTavern.csproj
+		SccProjectName6 = SmokersTavern
+		SccLocalPath6 = SmokersTavern
+	EndGlobalSection
+EndGlobal

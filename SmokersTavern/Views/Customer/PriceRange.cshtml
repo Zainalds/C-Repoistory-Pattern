@@ -1,0 +1,166 @@
+﻿@model PagedList.IPagedList<SmokersTavern.Model.ProductViewModel>
+@using PagedList.Mvc;
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCart.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<style>
+    .simpleCart_items div /*, div*/ {
+        float: left;
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .simpleCart_shelfItem, .shoppingcart-container {
+        border: 1px solid white;
+        padding: 1em;
+    }
+
+    .d {
+        border: none;
+    }
+
+    .x {
+        font: .7em Arial;
+        color: brown;
+        margin: .5em;
+        text-decoration: none;
+        padding: .15em 1.5em .2em 1.5em;
+        background-color: lightblue;
+        border: 7px solid lightblue;
+    }
+</style>
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Products</h2></center>
+        <br />
+        <br />
+        <br />
+        <div>
+            <span style="color: red; font-weight: bold">
+                @TempData["prodname"]
+            </span>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.DropDownList("criteria", (SelectList)ViewBag.ProductTypeId, new
+            {
+                @class = "form-control",
+                title = "Select Category",
+                onchange = "submit();"
+            });
+        }
+        <table class="d">
+            <tr>
+                <div>
+                    <span style="color: red; font-weight: bold">
+                        @TempData["productempty"]
+                    </span>
+                </div>
+
+                @{var next = 4;
+                }
+                @foreach (var item in Model)
+                {
+
+                    next = next - 1;
+
+                    <td class="d ">
+                        <div class="simpleCart_shelfItem ">
+                            <strong><p class="item_name col">@Html.DisplayFor(modelItem => item.ProductName)<p /></strong>
+                            <a href="@Url.Action("Details", "Product", new { id = item.Id }) "><img class="item_thumb" src="~/Content/Images/@item.ImageUrl" width="250" height="200" id="zoomPic" /></a>
+                            <strong>
+                                <p class="item_price col">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                                    <noscript><a href="no_javascript.html" class="item_add">Add to Cart</a>;</noscript>
+                                </p>
+                            </strong>
+                            <br />
+
+
+
+
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <table class="d "></table>
+                            }
+                            else
+                            {
+
+
+
+                                if (User.IsInRole("Receptionist") || User.IsInRole("Therapist"))
+                                {
+
+                                }
+                                if (!User.IsInRole("Admin") && !User.IsInRole("Therapist") && !User.IsInRole("Receptionist"))
+                                {
+
+
+
+                                    <script>document.write('<a href="#" class="item_add x">Add to Cart</a>');</script>
+                                }
+                            }
+
+                        </div>
+                    </td>
+                    if (next == 0)
+                    {
+                        next = 4;
+                        <td>
+                            <script>document.write("</tr><tr>");</script>
+                        </td>
+                    }
+
+                }
+            </tr>
+
+        </table>
+
+
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("PriceRange", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

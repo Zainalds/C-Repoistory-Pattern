@@ -1,0 +1,65 @@
+﻿<!--Rivashan-->
+@model SmokersTavern.Data.Models.PurchaseItem
+@{
+
+    ViewBag.Title = "Purchase Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<div id="right-panel" class="right-panel">
+    <div class="content mt-3">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="alert alert-danger" role="alert">
+                                <strong class="card-title">Are you sure you want to delete this Item? </strong>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><lable>Product Name</lable></th>
+                                        <td>@Html.DisplayFor(model => model.ProductName)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><lable>Product Cost Price</lable></th>
+                                        <td>@Html.DisplayFor(model => model.ProductCostPrice)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><lable>Quantity</lable></th>
+                                        <td>@Html.DisplayFor(model => model.Quantity)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="Remove" class="btn btn-danger" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+﻿<!--Shivani Reddy-->
+@model PagedList.IPagedList<SmokersTavern.Model.ProductViewModel>
+@using PagedList.Mvc;
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "GetCustomerProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCart.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/zoom/jquery.elevateZoom-3.0.8.min.js"></script>
+<script src="~/Scripts/zoom/jquery.elevatezoom.js"></script>
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+
+<style>
+    .simpleCart_items div /*, div*/ {
+        float: left;
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .simpleCart_shelfItem, .shoppingcart-container {
+        border: 1px solid white;
+        padding: 1em;
+    }
+
+    .d {
+        border: none;
+    }
+
+    .x {
+        font: .7em Arial;
+        color: brown;
+        margin: .5em;
+        text-decoration: none;
+        padding: .15em 1.5em .2em 1.5em;
+        background-color: lightblue;
+        border: 7px solid lightblue;
+    }
+</style>
+
+<script type="text/javascript">
+    $('#zoomPic').elevateZoom({
+        zoomType: "inner",
+        cursor: "crosshair",
+        zoomWindowFadeIn: 500,
+        zoomWindowFadeOut: 750
+    });
+
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="intro-text text-center">
+            <p>@Model.Count() - Products In Stock</p>
+        </h2>
+        <br />
+        <table class="d" cellspacing="200">
+            <tr>
+                @foreach (var item in Model)
+                {
+                <td class="d ">
+                    <div class="simpleCart_shelfItem ">
+                        <p class="item_name col">@Html.DisplayFor(modelItem => item.ProductName)<p />
+                        <a href="@Url.Action("Details", "Product", new {id = item.Id}) "><img class="item_thumb" src="~/Content/Images/@item.ImageUrl" width="250" height="200" id="zoomPic" /></a>
+                        <p class="item_price col">
+                            @Html.DisplayFor(modelItem => item.ProductPrice)
+                            <script>document.write('<a href="#" class="item_add x">Add to Cart</a>');</script>
+                        </p>
+                    </div>
+                </td>
+                }
+            </tr>
+        </table>
+        <br />
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("GetCustomerProduct", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

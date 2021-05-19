@@ -1,0 +1,105 @@
+﻿<!--Shivani Reddy-->
+@model SmokersTavern.Model.ProductViewModel
+
+
+@{
+    ViewBag.Title = "New Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Add New Product</h2></center>
+
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductDescription, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.ProductDescription, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ProductDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.BrandName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.BrandName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.BrandName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductColor, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.ProductColor, new { @type = "color" })
+            @Html.ValidationMessageFor(m => m.ProductColor, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductQuantity, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.ProductQuantity, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ProductQuantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductPrice, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.ProductPrice, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ProductPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductCostPrice, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.ProductCostPrice, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ProductCostPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoryId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.DropDownList("CategoryId", (SelectList)ViewBag.CategoryId, "Select Category", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.BranchId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.DropDownList("BranchId", (SelectList)ViewBag.BranchId, "Select Branch", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.BranchId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Upload Product Image", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            <input type="file" name="file" id="file" style="width: 100%;" />
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <!-- Modal -->
+        <input type="submit" value="Save" class="btn btn-success " />
+        <input type="reset" value="Reset" class="btn btn-info" />
+    </div>
+}
+
+

@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<SmokersTavern.Model.TopSellingProductViewModel>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+var data = new google.visualization.DataTable();
+data.addColumn('string', 'Product Name');
+data.addColumn('number', 'Product Quantity');
+var data1= @Html.Raw(Json.Encode(ViewBag.chart));
+$.each(data1, function(index, value) {
+    data.addRows([[value.ProductPurchaseName, value.ProductPurchaseQuantity]]);
+});
+var options = {'title':'Top Selling Products','width':400, 'height':300};
+var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+chart.draw(data, options);
+}
+</script>
+
+
+&nbsp;
+<br />
+<center><h2 class="alert-primary" style="font-family:'Comic Sans MS';">Top Selling Products</h2></center>
+
+&nbsp;
+&nbsp;
+
+
+
+<div>
+    @using (Html.BeginForm("TopSellingProduct", "Report", FormMethod.Post))
+    {
+        <div class="col-lg-2">
+            <p>From Date: <input type="text" id="datepicker" name="val" /></p>
+        </div>
+        <br />
+        <input type="submit" value="Search" id="SA" />
+    }
+</div>
+<br />
+<div class="card">
+    <div class="card-body">
+        <div style="float:left">
+            <div id="chart_div" style="float: right;"></div>
+        </div>
+    </div>
+</div>
+<br />
+<div>
+    <p>@Html.ActionLink("Export Word", "TopSellingProductWord", "Report") &nbsp;&nbsp;&nbsp;@Html.ActionLink("Export PDF", "TopSellingProductPDF", "Report")</p>
+</div>
+<br />
+<table class="table" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.ActionLink("Product Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort A-Z or Z-A" })
+        </th>
+        <th>
+            @Html.ActionLink("Total Purchases", "Index")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPurchaseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPurchaseQuantity)
+            </td>
+        </tr>
+    }
+</table>
+
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("TopSellingProduct",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

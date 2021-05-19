@@ -1,0 +1,127 @@
+﻿<!--Shivani Reddy-->
+@model SmokersTavern.Model.ProductViewModel
+@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCart.js"></script>
+
+
+<script src="~/Content/zoom/jquery.elevateZoom-3.0.8.min.js"></script>
+<script src="~/Content/zoom/jquery.elevatezoom.js"></script>
+
+
+<style>
+    .simpleCart_items div /*, div*/ {
+        float: left;
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .simpleCart_shelfItem, .shoppingcart-container {
+        border: 1px solid white;
+        padding: 1em;
+    }
+
+    .d {
+        border: none;
+    }
+
+    .x {
+        font: .7em Arial;
+        color: brown;
+        margin: .5em;
+        text-decoration: none;
+        padding: .15em 1.5em .2em 1.5em;
+        background-color: lightblue;
+        border: 7px solid lightblue;
+    }
+</style>
+
+
+<script type="text/javascript">
+    $('#zoomPic').elevateZoom({
+        zoomType: "inner",
+        cursor: "crosshair",
+        zoomWindowFadeIn: 500,
+        zoomWindowFadeOut: 750
+    });
+
+</script>
+
+<br />
+<br />
+<br />
+
+<h2 style="font-family:'Comic Sans MS'">@Html.DisplayFor(model => model.ProductName)</h2>
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="simpleCart_shelfItem ">
+            <div class="col-xs-4 item-photo">
+                <img src="~/Content/Images/@Model.ImageUrl" width="300" height="300" id="zoomPic" />
+            </div>
+            <div class="col-xs-5" style="border:0px solid gray">
+                <!-- Datos del vendedor y titulo del producto -->
+                <!-- Precios -->
+                <h6 class="title-price"><small>PRODUCT PRICE</small></h6>
+                <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductPrice)</h3>
+
+                <!-- Detalles especificos del producto -->
+                <h6 class="title-price"><small>PRODUCT COLOR</small></h6>
+                <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductColor)</h3>
+
+
+                <h6 class="title-price"><small>PRODUCT QUANTITY</small></h6>
+                <h3 style="margin-top:0px;">@Html.DisplayFor(model => model.ProductQuantity)</h3>
+
+                <br />
+                @Html.ActionLink("Continue Shopping", "Index", "Customer", routeValues: null, htmlAttributes: new { @class = "btn btn-info", @style = "color:white" })
+
+
+            </div>
+            <br />
+            <br />
+
+            <br />
+
+            <div class="col-xs-9">
+                <h4 style="color:red;"><strong>Description</strong></h4>
+                <br />
+                <div style="width:100%;border-top:1px solid silver">
+                    <small>
+                        <ul>
+                            <li>Atomizer material: stainless steel</li>
+                            <li>Mod material: Aluminum + zinc alloy construction</li>
+                            <li>Glass tank</li>
+                            <li>Variable wattage: 5W-80W</li>
+                            <li>Temperature control: 200'F-600'F / 100'C-300'C</li>
+                            <li>Resistance range: 0.1-3ohm(VW) / 0.05-0.35ohm(Ni) / 0.1-0.8ohm(Ti)</li>
+                            <li>OLED screen</li>
+                            <li>Magnet back cover</li>
+                            <li>Overload protection</li>
+                            <li>Over time protection</li>
+                            <li>Low voltage protection</li>
+                            <li>Short-circuit protection</li>
+                            <li>Overcharge protection</li>
+                            <li>Houses a single high amperage 18650 battery (batteries sold separately)</li>
+                            <li>Micro-USB port</li>
+                        </ul>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>        

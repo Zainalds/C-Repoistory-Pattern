@@ -1,0 +1,122 @@
+﻿<!--Shivani Reddy-->
+@model SmokersTavern.Model.ProductViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script src="/Scripts/jquery-1.10.2.js"></script>
+
+<script src="/Scripts/jquery.validate.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.bootstrap.js"></script>
+
+
+
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Are you sure you want to update this product?</h2></center>
+<br />
+
+@using (Html.BeginForm("Update", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+@Html.AntiForgeryToken()
+
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ProductName, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductName)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ProductDescription, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductDescription)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BrandName, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BrandName)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ProductColor, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ProductColor, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductColor)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ProductQuantity, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ProductQuantity, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductQuantity)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ProductPrice, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductPrice)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ProductCostPrice, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ProductCostPrice, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductCostPrice)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CategoryId, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("CategoryId", (SelectList)ViewBag.CategoryId, "Select Category", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CategoryId)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.BranchId, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10" style="height: 40%;width: 30%">
+        @Html.DropDownList("BranchId", (SelectList)ViewBag.BranchId, "Select Branch", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.BranchId, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn-primary" />
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("All Products", "Index", "Product", new { @class = "btn btn-success", @style = "color:white" })
+    </div>
+</div>
+}
+
+
+

@@ -1,0 +1,174 @@
+﻿<!--Vishalen-->
+@model PagedList.IPagedList<SmokersTavern.Model.OrderViewModel>
+@using PagedList.Mvc;
+@using System.Web.UI.WebControls
+@{
+    ViewBag.Title = "GetCustomerOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCart.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+
+    td, th, h2 {
+        color: black;
+    }
+
+    .x {
+        font: .7em Arial;
+        color: brown;
+        margin: .5em;
+        text-decoration: none;
+        padding: .15em 1.5em .2em 1.5em;
+        background-color: lightblue;
+        border: 7px solid lightblue;
+    }
+</style>
+
+<br />
+<br />
+<legend></legend>
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Dispatched Orders</h2></center>
+<br />
+<p>@Html.ActionLink("Pending Orders", "GetPendingOrders", "Order") &nbsp;&nbsp;&nbsp; @Html.ActionLink("Delivered Orders", "GetDeliveredOrders", "Order") &nbsp;&nbsp;&nbsp; @Html.ActionLink("Returns", "GetReturnOrders", "Order")</p>
+<br />
+@*<div class="row">
+        <div class="col-lg-12">
+
+
+            <table class="table">
+                <tr>
+                    <div>
+                        <span style="color: red; font-weight: bold">
+                            @TempData["custempty"]
+                        </span>
+                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Print Daily Report", "PrintConfirmed2")
+                    }
+                    <table>
+                        <tr><th>Order ID&nbsp;</th><th>Customer&nbsp;</th><th>Date&nbsp;</th><th>Products&nbsp;</th><th>Total&nbsp;</th><th>Status&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.OrderId)&nbsp;</td>
+                                <td>@Html.DisplayFor(modelItem => item.Username)&nbsp;</td>
+                                <td>@Html.DisplayFor(modelItem => item.Date)&nbsp;</td>
+                                <td>@Html.DisplayFor(modelItem => item.Products)&nbsp;</td>
+                                <td>@Html.DisplayFor(modelItem => item.Price)&nbsp;</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Quantity)&nbsp;</td>
+                                    <td>@Html.DisplayFor(modelItem => item.SubTotal)&nbsp;</td>
+                                <td>@Html.DisplayFor(modelItem => item.Total)&nbsp;</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)&nbsp;</td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td>@Html.ActionLink("Process", "Edit", new { id = item.OrderId }, new { @class = "x" })</td>
+                                    <td>@Html.ActionLink("Delete", "Delete", new { id = item.OrderId }, new { @class = "x" })</td>
+
+                                }
+                                <td>@Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "x" })</td>
+                                <td>@Html.ActionLink("Print Receipt", "PrintConfirmed", new { id = item.OrderId }, new { @class = "x" })</td>
+                            </tr>
+                        }
+
+                    </table>
+                    <br />
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+        </div>
+    </div>*@
+@using (Html.BeginForm("GetDispatchedOrders", "Order", FormMethod.Get))
+{
+<p>
+    Search By Order Name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { id = "searchBox", onkeyup = "myFunction()" })
+    <input type="submit" value="Search" />
+</p>
+}
+<br />
+<center><p style="color:lightslategrey;">@Model.Count() - Dispatched Orders</p></center>
+<br />
+<table class="table" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.Label("Order ID")
+        </th>
+        <th>
+            @Html.Label("Date")
+        </th>
+        <th>
+            @Html.Label("Products")
+        </th>
+        <th>
+            @Html.Label("Total")
+        </th>
+        <th>
+            @Html.Label("Status")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Products)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "x" })
+        </td>
+        <td>
+            @Html.ActionLink("Print Receipt", "PrintConfirmed", new { id = item.OrderId }, new { @class = "x" })
+        </td>
+    </tr>
+    }
+</table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("GetDispatchedOrders",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

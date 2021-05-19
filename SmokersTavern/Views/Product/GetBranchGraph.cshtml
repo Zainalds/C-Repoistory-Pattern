@@ -1,0 +1,38 @@
+﻿<!--Shivani Reddy-->
+@model IEnumerable<SmokersTavern.Model.ProductViewModel>
+
+@{
+    ViewBag.Title = "GetGraph";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var item in Model.Take(1))
+{
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';color:black;">@Html.DisplayFor(modelItem => item.BranchName) Reporting Analysis </h2></center>
+}
+<br />
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+var data = new google.visualization.DataTable();
+data.addColumn('string', 'Category Name');
+data.addColumn('number', 'Product Quantity');
+var data1= @Html.Raw(Json.Encode(ViewBag.GetData));
+$.each(data1, function(index, value) {
+data.addRows([[value.CategoryName, value.ProductQuantity]]);
+});
+var options = {'title':'Branch Quantity Pie Chart','width':400, 'height':300};
+var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+chart.draw(data, options);
+}
+</script>
+
+
+
+
+<div style="float:left">
+    <div id="chart_div" style="float: right;"></div>
+</div>

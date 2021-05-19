@@ -1,0 +1,53 @@
+﻿<!--Shivani Manickum-->@model SmokersTavern.Model.CategoryViewModel
+@{
+    ViewBag.Title = "ArchiveCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+&nbsp;
+&nbsp;
+
+
+
+&nbsp;
+&nbsp;
+
+
+<div class="modal fade in" id="signup" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel2" aria-hidden="false" style="display:block;">
+    <div class="modal-dialog" style="margin-top: 100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="submit" class="close" data-dismiss="modal" aria-hidden="true" onclick="window.location.href='/Product/AllCategories'">×</button>
+                <center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Archive Category</h2></center>
+            </div>
+            @using (Html.BeginForm("ArchiveCategory", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary()
+                <div class="modal-body" id="product_details">
+
+
+                    <span>Product Name</span>
+                    @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryName)
+                    <br />
+
+                    <div class="modal-footer">
+                        <input type="submit" value="Submit" class="btn btn-success " />
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@model SmokersTavern.Model.RoleViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<center><h2 class="alert-info" style="font-family:'Comic Sans MS';">New System Privilege</h2></center>
+
+
+@using (Html.BeginForm())
+{
+    <style>
+        body {
+            background-color: #F1F1F1;
+        }
+    </style>
+    @Html.AntiForgeryToken()
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="reset" value="Reset" class="btn btn-info" />
+                    @Html.ActionLink("System Privileges","Index", "Role",new { @class = "btn btn-danger", @style = "color:white" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

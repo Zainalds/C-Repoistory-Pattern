@@ -1,0 +1,10 @@
+﻿@model IEnumerable<SmokersTavern.Model.CategoryViewModel>
+
+
+
+
+@foreach (var item in Model)
+{
+
+    <li>@Html.ActionLink(item.CategoryName, "GetCustomerProduct", "Product", new { Id = item.Id }, null)</li>
+}

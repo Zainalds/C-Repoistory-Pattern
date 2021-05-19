@@ -1,0 +1,45 @@
+﻿<!--Rivashan-->
+@model SmokersTavern.Data.Models.PurchaseItem
+@{
+    ViewBag.Title = "Edit Purchase Order";
+}
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Edit Purchase Order</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form action="" method="post" class="form-horizontal">
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Quantity</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Name" class="form-control">*@
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", placeholder = "Name" })
+                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class=" form-control-label">Product</label></div>
+                            <div class="col-12 col-md-9">
+                                @*<input type="text" id="text-input" name="text-input" placeholder="Maiden Name" class="form-control">*@
+                                @Html.DropDownList("ProductId", (SelectList)ViewBag.a, "Select Product", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer">
+                    <input type="submit" value="Save " class="btn btn-primary btn-md" />
+                </div>
+            </div>
+        </div>
+    }
+</body>

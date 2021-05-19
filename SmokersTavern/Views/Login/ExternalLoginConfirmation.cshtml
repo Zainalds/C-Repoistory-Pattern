@@ -1,0 +1,145 @@
+﻿<!--Shreshtha-->
+@model SmokersTavern.Model.ExternalLoginConfirmationModel
+@{
+    ViewBag.Title = "ExternalLoginConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBZnpoyI3c5lcX-lcOaj3A0RdF83YLF1mg"></script>
+<script type="text/javascript">
+    google.maps.event.addDomListener(window, 'load', function () {
+        var places = new google.maps.places.Autocomplete(document.getElementById('Address'));
+        getLatLong(places);
+
+    });
+
+    function placeLastOfFocus() {
+        // alert(1);
+
+
+        // alert(places);
+        //document.getElementById('Address').value
+        //!a.trim()
+        if (!document.getElementById('Address').value.trim()) {
+
+            $("#Address1").val('');
+            $("#latitude").val('');
+            $("#longitude").val('');
+            return;
+        }
+        //doGeocode();
+        var places = new google.maps.places.Autocomplete(document.getElementById('Address'));
+        getLatLong(places);
+    }
+    function doGeocode() {
+        var addr = document.getElementById("Address");
+        // Get geocoder instance
+        var geocoder = new google.maps.Geocoder();
+
+        // Geocode the address
+        geocoder.geocode({ 'address': addr.value }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+
+                // set it ot he correct, formatted address if it's vadlid
+                addr.value = results[0].formatted_address;;
+                alert("valid");
+                // show an error if it's not
+            } else alert("Invalid address");
+        });
+    };
+    function getLatLong(places) {
+        google.maps.event.addListener(places, 'place_changed', function () {
+            $("#Address").val('');
+            $("#latitude").val('');
+            $("#longitude").val('');
+            //alert(1);
+            var place = places.getPlace();
+            var address = place.formatted_address;
+            var latitude = place.geometry.location.lat();
+            var longitude = place.geometry.location.lng();
+            //var city = place.geometry.location.city();
+            //alert(address);
+            //for testing purpose alert
+            var mesg = "Address: " + address;
+            mesg += "\nLatitude: " + latitude;
+            mesg += "\nLongitude: " + longitude;
+            //alert(mesg);
+            $("#Address1").val(address);
+            //$("#latitude").val(latitude);
+            //$("#longitude").val(longitude);
+            $("#Address").val(address);
+        });
+    }
+</script>
+
+
+<style>
+    .n {
+        font-family: sans-serif;
+    }
+</style>
+<link href="~/layout/styles/layout.css" rel="stylesheet" />
+<br />
+<br />
+<div class="row">
+    @*<div class="box">*@
+    <div class="col-lg-12">
+        <center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Login using your @ViewBag.LoginProvider account</h2></center>
+
+        @using (Html.BeginForm("ExternalLoginConfirmation", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+         {
+        @Html.AntiForgeryToken()
+
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstMidName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstMidName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstMidName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label", id = "Address", autocomplete = "on" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CellNo, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.CellNo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CellNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" style="width: 20%;height: 10%" class="btn btn-success btn-block btn-lg" value="Register" />
+            </div>
+        </div>
+}
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+</div>
+@*</div>*@

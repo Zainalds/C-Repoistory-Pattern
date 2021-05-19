@@ -1,0 +1,94 @@
+﻿@model IEnumerable<SmokersTavern.Model.TopCustomerViewModel>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+    @Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+    @Styles.Render("~/Content/css/sb-admin.css")
+
+    @Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+    @Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+    @Scripts.Render("~/Content/js/sb-admin.min.js")
+    @Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")*@
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
+<script>
+    $(function () {
+        $("#datepicker1").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
+
+&nbsp;
+&nbsp;
+<br />
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Top Customers</h2></center>
+
+@using (Html.BeginForm("TopCustomers", "Report", FormMethod.Post))
+{
+    <div style="float:right">
+        <div class="col-lg-2">
+            <p>From Date: <input type="text" id="datepicker" name="val" /></p>
+            @*<p>End Date: <input type="text" id="datepicker1" name="val2"></p>*@
+        </div>
+        <br />
+        <input type="submit" value="Search" id="SA" />
+    </div>
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h6>Top Customers</h6>
+@foreach (var item in Model)
+{
+    if (item.OrderAmount > 5000)
+    {
+        <div>
+            <ul>
+                <li>Name: &nbsp;@Html.DisplayFor(model => item.CustomerEmailAddress)</li>
+                <li>Total Purchase Value: &nbsp;@Html.DisplayFor(model => item.OrderAmount)</li>
+            </ul>
+        </div>
+    }
+}
+<br />
+<div>
+    <p>@Html.ActionLink("Export Word", "TopCustomersWord", "Report") &nbsp;&nbsp;&nbsp;@Html.ActionLink("Export PDF", "TopCustomersPDF", "Report")</p>
+</div>
+<br />
+<table class="table" id="myTable" style="padding:5px">
+    <tr>
+        <th>
+            @Html.ActionLink("Customer Email", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Order Total", "Index")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerEmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderAmount)
+            </td>
+        </tr>
+    }
+</table>

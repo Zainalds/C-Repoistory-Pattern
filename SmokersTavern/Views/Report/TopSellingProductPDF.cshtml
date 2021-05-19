@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SmokersTavern.Model.TopSellingProductViewModel>
+
+
+
+@{
+    ViewBag.Title = "Products";
+    Layout = null;
+}
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+var data = new google.visualization.DataTable();
+data.addColumn('string', 'Product Name');
+data.addColumn('number', 'Product Quantity');
+var data1= @Html.Raw(Json.Encode(ViewBag.chart));
+$.each(data1, function(index, value) {
+    data.addRows([[value.ProductPurchaseName, value.ProductPurchaseQuantity]]);
+});
+var options = {'title':'Top Selling Products','width':400, 'height':300};
+var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+chart.draw(data, options);
+}
+</script>
+
+
+&nbsp;
+<br />
+<center><h2 class="alert-primary" style="font-family:'Comic Sans MS';">Top Selling Products</h2></center>
+
+&nbsp;
+&nbsp;
+
+<center>
+    <div class="card">
+        <div class="card-body">
+            <div style="float:left">
+                <div id="chart_div"></div>
+            </div>
+        </div>
+    </div>
+</center>
+
+<br />
+<br />
+<br />
+
+<center>
+    <table class="table" id="myTable" frame="box">
+        <tr>
+            <th style="padding-right:250px">
+                @Html.ActionLink("Product Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort A-Z or Z-A" })
+            </th>
+            <th>
+                @Html.ActionLink("Total Purchases", "Index")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="padding-right:250px">
+                    @Html.DisplayFor(modelItem => item.ProductPurchaseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductPurchaseQuantity)
+                </td>
+            </tr>
+        }
+    </table>
+</center>
+

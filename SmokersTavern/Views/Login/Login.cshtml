@@ -1,0 +1,61 @@
+﻿<!--Shreshtha-->
+@using SmokersTavern.Model
+@model LoginModel
+@{
+                /**/
+
+                ViewBag.Title = "Login";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center><h2 class="alert-info" style="font-family:'Comic Sans MS';">Logon To Start Purchasing</h2></center>
+
+
+
+@using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" style="height: 40%;width: 30%">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="input-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.RememberMe) Remember me
+            </label>
+        </div>
+    </div>
+
+    <div style="margin-top:10px" class="form-group">
+        <!-- Button -->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Log in" style="width: 20%;height: 10%" class="btn btn-success btn-block btn-lg " />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-md-4">
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

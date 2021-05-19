@@ -1,0 +1,34 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+<br />
+<br />
+
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Smokers Tavern</h2></center>
+
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>Successful Payment</title>
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        simpleCart.empty();
+    })
+</script>
+<center><h6 style="color:black">Smokers Tavern Payment checkout processed successfully</h6></center><br />
+<p style="font-size: 16px; color: brown">
+    <a href="/Order"> Click here </a> to Print Invoice
+</p>

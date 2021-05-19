@@ -1,0 +1,273 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="alert-success" style="font-family:'Comic Sans MS';">My Shopping Cart</h2>
+<br />
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCart.js"></script>
+
+
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBZnpoyI3c5lcX-lcOaj3A0RdF83YLF1mg"></script>
+<script type="text/javascript">
+    google.maps.event.addDomListener(window, 'load', function () {
+        var places = new google.maps.places.Autocomplete(document.getElementById('Address'));
+        getLatLong(places);
+
+    });
+
+    function placeLastOfFocus() {
+        // alert(1);
+
+
+        // alert(places);
+        //document.getElementById('Address').value
+        //!a.trim()
+        if (!document.getElementById('Address').value.trim()) {
+
+            $("#Address1").val('');
+            $("#latitude").val('');
+            $("#longitude").val('');
+            return;
+        }
+        //doGeocode();
+        var places = new google.maps.places.Autocomplete(document.getElementById('Address'));
+        getLatLong(places);
+    }
+    function doGeocode() {
+        var addr = document.getElementById("Address");
+        // Get geocoder instance
+        var geocoder = new google.maps.Geocoder();
+
+        // Geocode the address
+        geocoder.geocode({ 'address': addr.value }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+
+                // set it ot he correct, formatted address if it's vadlid
+                addr.value = results[0].formatted_address;;
+                alert("valid");
+                // show an error if it's not
+            } else alert("Invalid address");
+        });
+    };
+    function getLatLong(places) {
+        google.maps.event.addListener(places, 'place_changed', function () {
+            $("#Address").val('');
+            $("#latitude").val('');
+            $("#longitude").val('');
+            //alert(1);
+            var place = places.getPlace();
+            var address = place.formatted_address;
+            var latitude = place.geometry.location.lat();
+            var longitude = place.geometry.location.lng();
+            //var city = place.geometry.location.city();
+            //alert(address);
+            //for testing purpose alert
+            var mesg = "Address: " + address;
+            mesg += "\nLatitude: " + latitude;
+            mesg += "\nLongitude: " + longitude;
+            //alert(mesg);
+            $("#Address1").val(address);
+            //$("#latitude").val(latitude);
+            //$("#longitude").val(longitude);
+            $("#Address").val(address);
+        });
+    }
+</script>
+
+<script type="text/javascript">
+
+    simpleCart({
+
+        checkout: {
+            type: "SendForm",
+            url: "https://sandbox.payfast.co.za/eng/process",
+
+            // HTTP method for form, "POST"
+            method: "POST",
+
+            // URL to redirect browser to after successful checkout
+            success: "https://smokerstavernstore.azurewebsites.net/cart/success",
+
+            // URL to redirect browser to after checkout was cancelled by buyer
+            cancel: "https://smokerstavernstore.azurewebsites.net/cart/cancel",
+
+            extra_data: {
+                currency_code: "ZAR",
+                merchant_id: "10000100",
+                merchant_key: "46f0cd694581a",
+                notify_url: "https://smokerstavernstore.azurewebsites.net", //this is the ITN or callback URL
+                amount: simpleCart.total, // Total amount = item1 + item2 + item3 etc
+                name_first: "Buyer first name",
+                name_last: "Buyer last name",
+                item_description: simpleCart.items
+            }
+        },
+        beforeCheckout: function (data) {
+            data.currency = "ZAR";
+            data.cancel_url = data.cancel_return;
+            data.return_url = data.return;
+            var payfast_description = '';
+            for (var key in data)
+                if (key.match(/^item_name/))
+                    payfast_description += ' ' + data[key];
+            data.item_description = data.item_name = payfast_description;
+            data = '@Session["item_description"]';
+        }
+
+
+    });
+
+</script>
+
+
+<style>
+    .simpleCart_items div /*, div*/ {
+        float: left;
+        position: relative;
+        margin-right: 20px;
+        color: lightseagreen;
+        font-weight: bolder;
+    }
+
+    table {
+        text-align: center;
+    }
+
+    .simpleCart_shelfItem, .shoppingcart-container {
+        border: 1px solid white;
+        padding: 1em;
+        font-weight: bolder;
+    }
+
+    .d {
+        border: none;
+    }
+
+    body {
+        color: dodgerblue;
+    }
+
+    img {
+        width: 130px;
+        height: 130px;
+    }
+</style>
+
+<table width="600" align="center">
+    <tr class="d">
+        <td colspan="2" class="shoppingcart-container d">
+            <div style="width: 700px;" class="simpleCart_items"></div>
+        </td>
+    </tr>
+</table>
+<br />
+<table align="center">
+    <thead>
+        <tr>
+            <th>Total Purchases:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span class="simpleCart_quantity"></span></td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<table align="center">
+    <thead>
+        <tr>
+            <th>Grand Total:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span class="simpleCart_total"></span></td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<table align="center">
+    <thead>
+        <tr>
+            <th>Order Posal Address:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" id="Address" class="form-control" placeholder="Address" autocomplete="on" /></td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<table align="center">
+    <tr class="actionButtons">
+        <td class="d" style="color:red; font-weight:bolder">
+            <noscript><a href="no_javascript.html" class="simpleCart_empty">Empty Cart</a>;</noscript>
+            <script>document.write('<a href="#" class="simpleCart_empty btn btn-danger">Empty Cart</a>');</script>
+        </td>
+        &nbsp;
+        &nbsp;
+        <td class="d" align="left" style="color:lawngreen; font-weight:bolder">
+            <noscript><a href="no_javascript.html" id="SA" class="simpleCart_checkout">Checkout</a>;</noscript>
+            <script>document.write('<a href="#"  id="SA"class="simpleCart_checkout btn btn-success"  >Checkout</a>');</script>
+        </td>
+        &nbsp;
+        &nbsp;
+        <td>
+            @Html.ActionLink("Continue Shopping", "Index", "Customer", routeValues: null, htmlAttributes: new { @class = "btn btn-info", @style = "color:white", id = "btnContinue" })
+        </td>
+    </tr>
+</table>
+
+
+
+@*<script type="text/javascript">
+
+        $("#SA").click(function () {
+            var url = "<span style='color:white; font-weight: bolder'>/Order/tot</span>";
+            //var name = simpleCart.items;
+            var name2 = "<span style='color:white;font-weight:bolder'>simpleCart.XX</span>";
+            var price = "<span style='color:white;font-weight:bolder'>simpleCart.total</span>";
+            name2
+            $.post(url, { Name: name2, Price: price }, function (data) {
+                $("#msg").html(data);
+
+
+
+            });
+
+
+        });
+
+
+
+    </script>*@
+
+<script type="text/javascript">
+
+    $("#SA").click(function () {
+        var url = "/Order/tot";
+        //var name = simpleCart.items;
+        var name2 = simpleCart.XX;
+        var price = simpleCart.total;
+
+        var comments = $("#Address").val();
+
+        $.post(url, { Name: name2, Price: price, Comments: comments }, function (data) {
+            $("#msg").html(data);
+        });
+    });
+
+</script>
+

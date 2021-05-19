@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SmokersTavern.Model.TopCustomerViewModel>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = null;
+}
+
+&nbsp;
+&nbsp;
+<br />
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';color:dodgerblue;">Smokers Tavern Top Customers</h2></center>
+
+<br />
+<br />
+<br />
+@foreach (var item in Model)
+{
+    if (item.OrderAmount > 5000)
+    {
+        <div>
+            <ul>
+                <li>Name: &nbsp;@Html.DisplayFor(model => item.CustomerEmailAddress)</li>
+                <li>Total Purchase Value: &nbsp;@Html.DisplayFor(model => item.OrderAmount)</li>
+            </ul>
+        </div>
+    }
+}
+<br />
+<br />
+<center>
+    <table class="table" id="myTable" frame="box">
+        <tr>
+            <th style="padding-right:300px">
+                @Html.ActionLink("Customer Email", "Index")
+            </th>
+
+            <th>
+                @Html.ActionLink("Total Purchases", "Index")
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="padding-right:300px">
+                    @Html.DisplayFor(modelItem => item.CustomerEmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderAmount)
+                </td>
+            </tr>
+        }
+    </table>
+</center>
+

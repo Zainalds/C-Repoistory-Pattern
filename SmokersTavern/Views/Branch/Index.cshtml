@@ -1,0 +1,117 @@
+﻿<!--Shreshtha-->@model PagedList.IPagedList<SmokersTavern.Model.BranchViewModel>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Branches";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+&nbsp;
+&nbsp;
+<br />
+<center><h2 class="alert-dark" style="font-family:'Comic Sans MS';">Branches</h2></center>
+
+&nbsp;
+&nbsp;
+
+@*<div style="padding:10px; border:1px solid black">
+        <div><a href="@Url.Action("Report",new {id= "PDF"})"> Get Report PDF</a></div>
+        <div><a href="@Url.Action("Report",new {id= "Excel"})"> Get Report Excel</a></div>
+        <div><a href="@Url.Action("Report",new {id= "Word"})"> Get Report Word</a></div>
+        <div><a href="@Url.Action("Report",new {id= "Image"})"> Get Report Image</a></div>
+    </div>*@
+
+@using (Html.BeginForm("Index", "Branch", FormMethod.Get))
+{
+    <p>
+        Search By Branch Name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { id = "searchBox", onkeyup = "myFunction()" })
+        <input type="submit" value="Search" />
+    </p>
+}
+<br />
+
+<table class="table" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.ActionLink("Branch Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort A-Z or Z-A" })
+        <th>
+            @Html.ActionLink("Branch Manager", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Branch Address", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Branch Contact Number", "Index")
+        </th>
+        <th>
+            @Html.ActionLink("Branch Email", "Index", new { sortOrder = ViewBag.PriceSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort Highest-Lowest" })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchManager)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchContactNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchEmail)
+        </td>
+        <td>@Html.ActionLink("Add Stock", "Create", "Product", new { Id = item.BranchId }, new { @class = "btn btn-warning", @style = "color:white" })</td>
+        <td>
+            @Html.ActionLink("Edit", "Update", new { Id = item.BranchId }, new { @class = "btn btn-primary", @style = "color:white" })
+        </td>
+        <td>
+            @Html.ActionLink("View Stock", "StockPerBranch", "Product", new { Id = item.BranchId }, new { @class = "btn btn-primary", @style = "color:white" })
+        </td>
+        <td>@Html.ActionLink("Quantity Levels", "GetBranchGraph", "Product", new { Id = item.BranchId }, new { @class = "btn btn-danger", @style = "color:white" })</td>
+    </tr>
+    }
+</table>
+
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

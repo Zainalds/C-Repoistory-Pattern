@@ -1,0 +1,83 @@
+﻿<!--Shivani Manickum-->
+@model PagedList.IPagedList<SmokersTavern.Model.CategoryViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+&nbsp;
+&nbsp;
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';"> Product Categories</h2></center>
+&nbsp;
+&nbsp;
+<br />
+@using (Html.BeginForm("AllCategories", "Product", FormMethod.Get))
+{
+
+<p>
+    Search By Category Name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { id = "searchBox", onkeyup = "myFunction()" })
+    <input type="submit" value="Search" />
+</p>
+}
+
+<br />
+<table class="table" style="border:thin;border-color:whitesmoke;" id="myTable">
+    <tr>
+        <th>
+            @Html.ActionLink("Category name", "AllCategories", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { Class = "action add", title = "Sort A-Z or Z-A" })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.CategoryName, "GetProduct", "Product", new { Id = item.Id }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "UpdateCategory", new { Id = item.Id }, new { @class = "btn btn-primary", @style = "color:white" })
+                @*@Html.ActionLink("Archive", "ArchiveCategory", new { Id = item.Id }, new { @class = "btn btn-danger", @style = "color:white" })*@
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("AllCategories",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

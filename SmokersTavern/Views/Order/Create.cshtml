@@ -1,0 +1,186 @@
+﻿@model SmokersTavern.Model.OrderViewModel
+@using System.Web.UI.WebControls
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/JavaScript/jquery-1.7.2.min.js"></script>
+<script src="~/Content/JavaScript/simpleCartOrder.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@Styles.Render("~/Content/vendor/bootstrap/css/bootstrap.min.css")
+@Styles.Render("~/Content/vendor/font-awesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/css/sb-admin.css")
+
+@Scripts.Render("~/Content/vendor/jquery/jquery.min.js")
+@Scripts.Render("~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js")
+@Scripts.Render("~/Content/js/sb-admin.min.js")
+@Scripts.Render("~/Content/vendor/jquery-easing/jquery.easing.min.js")
+<script type="text/javascript">
+
+    simpleCart({
+        checkout: {
+            type: "SendForm",
+            url: "https://sandbox.payfast.co.za/eng/process",
+
+            // HTTP method for form, "POST"
+            method: "POST",
+
+            // URL to redirect browser to after successful checkout
+            success: "http://smokerstavernstore.azurewebsites.net",
+
+            // URL to redirect browser to after checkout was cancelled by buyer
+            cancel: "http://smokerstavernstore.azurewebsites.net",
+
+            extra_data: {
+                currency_code: "ZAR",
+                merchant_id: "10001252",
+                merchant_key: "svfni9t6yoydg",
+                notify_url: "http://smokerstavernstore.azurewebsites.net", //this is the ITN or callback URL
+                amount: simpleCart.total, // Total amount = item1 + item2 + item3 etc
+                name_first: "Buyer first name",
+                name_last: "Buyer last name",
+            }
+        },
+        beforeCheckout: function (data) {
+            data.currency = "ZAR";
+            data.cancel_url = data.cancel_return;
+            data.return_url = data.return;
+            var payfast_description = '';
+            for (var key in data)
+                if (key.match(/^item_name/))
+                    payfast_description += ' ' + data[key];
+            data.item_description = data.item_name = payfast_description;
+        }
+    });
+</script>
+<script>
+    $('#Save').click(function () {
+        var url = "/Orders/tot";
+        var name = rating;
+        var id= Model.OrderId;
+        $.post(url, { Name: name ,ID:id }, function (data) {
+            $("#msg").html(data);
+
+        });
+
+</script>
+<style>
+    .simpleCart_items div /*, div*/ {
+        float: left;
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .simpleCart_shelfItem, .shoppingcart-container {
+        border: 1px solid white;
+        padding: 1em;
+    }
+
+    .d {
+        border: none;
+    }
+</style>
+<link href="~/layout/styles/layout.css" rel="stylesheet" />
+<legend></legend>
+<center><h2 class="alert-success" style="font-family:'Comic Sans MS';">Smokers Tavern</h2></center>
+
+<div class="row">
+    @*<div class="box">*@
+    <div class="col-lg-12">
+        <hr />
+        <h2 class="intro-text text-center">
+            Generate Order
+        </h2>
+        <br />
+        <br />
+
+        @using (Html.BeginForm("Create", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Customer, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10" style="height: 40%; width: 30%">
+                            @Html.EditorFor(model => model.Customer, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Customer, "", new {@class = "text-danger"})
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Date, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10" style="height: 40%; width: 30%">
+                            @Html.EditorFor(model => model.Date, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Date, "", new {@class = "text-danger"})
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Products, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-md-10" style="height: 40%; width: 30%">
+                    @Html.EditorFor(model => model.Products, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Products, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="height: 40%; width: 30%">
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="height: 40%; width: 30%">
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="height: 40%; width: 30%">
+                        @Html.EditorFor(model => model.SubTotal, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SubTotal, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            @*</div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="height: 40%; width: 30%">
+                        @Html.DropDownListFor(model => model.Status, new SelectList(new[] { "Pending", "Collected" }))
+                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" style="width: 20%;height: 10%" class="btn btn-success btn-block btn-lg" />
+                </div>
+            </div>
+
+
+            <button id="Save">ssss</button>
+            <span id="msg" />
+
+        }
+
+        <div>
+            @Html.ActionLink("Order", "Index")
+        </div>
+    </div>
+</div>
+@*</div>*@

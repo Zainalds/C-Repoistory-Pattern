@@ -1,0 +1,112 @@
+﻿<!--Shivani Manickum-->
+@model PagedList.IPagedList<SmokersTavern.Data.Customer>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+
+<div class="brand">Smokers Tavern</div>
+<div class="row">
+
+    <div class="col-lg-12">
+        <hr />
+        <h2 class="intro-text text-center">
+            Registered Customers
+        </h2>
+
+        @using (Html.BeginForm())
+        {
+            <div>
+                <input type="text" id="searchBox"  class="form-control col-md-10" style="height: 5%;width: 18%" placeholder="Enter Customer name" onkeyup="myFunction()"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <input type="submit" class="btn btn-success" value="search" /><br /><br />
+            </div>
+            <div>
+                <span style="color: red; font-weight: bold">
+                    @TempData["custname"]
+                </span>
+            </div>
+        }
+
+        <table class="table" id="myTable">
+            <tr>
+                <div>
+                    <span style="color: red; font-weight: bold">
+                        @TempData["custempty"]
+                    </span>
+                </div>
+                <th class="m">
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FirstMidName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Address)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CellNo)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstMidName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CellNo)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Details", "Details", new { id = item.Email }) |*@
+                    </td>
+                </tr>
+            }
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+    </div>
+</div>
+
